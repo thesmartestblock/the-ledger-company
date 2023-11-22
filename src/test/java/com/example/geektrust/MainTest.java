@@ -1,11 +1,12 @@
 package com.example.geektrust;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainTest {
 
@@ -19,7 +20,7 @@ public class MainTest {
     }
 
     @Test
-    void main() {
+    void testingApp1() {
 
 
         Main.main(new String[]{"sample_input/input1.txt"});
@@ -28,7 +29,7 @@ public class MainTest {
                 "IDIDI Dale 3652 4" + System.lineSeparator() +
                 "UON Shelly 15856 3" + System.lineSeparator() +
                 "MBI Harry 9044 10";
-        Assertions.assertEquals(expectedOutput,outputStreamCaptor.toString().trim());
+        Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
 
     }
 

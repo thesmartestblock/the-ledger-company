@@ -18,8 +18,8 @@ public class LoanService implements ILoanService{
     public void saveEntry(Bank bank, Customer customer, LoanDetails data){
         Double amountToPay = calculateTotalAmountToPay(data);
 
-        Installment installment = calculateFinalEMI(amountToPay, data.getYears());
-        Loan loan = new Loan(bank, customer, installment,amountToPay);
+        Installment installment = calculateFinalInstallment(amountToPay, data.getYears());
+        Loan loan = new Loan(installment,amountToPay);
         records.saveCustomer(customer,loan);
     }
     Double calculateTotalAmountToPay(LoanDetails data){
@@ -29,13 +29,13 @@ public class LoanService implements ILoanService{
         return data.getPrincipal() + interest;
     }
 
-    Installment calculateFinalEMI(Double finalAmountToPay, Double years) {
+    Installment calculateFinalInstallment(Double finalAmountToPay, Double years) {
 
         int monthsInAYear = 12;
-        Integer totalEmi = (int) Math.ceil(years* monthsInAYear);
-        Integer costPerEmi = (int) Math.ceil(finalAmountToPay/totalEmi);
+        Integer totalInstallment = (int) Math.ceil(years* monthsInAYear);
+        Integer costPerInstallment = (int) Math.ceil(finalAmountToPay/totalInstallment);
 
-        return new Installment(totalEmi,costPerEmi);
+        return new Installment(costPerInstallment);
 
     }
 }

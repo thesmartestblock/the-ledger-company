@@ -1,46 +1,33 @@
 package com.example.geektrust.Repository;
 
+import com.example.geektrust.Entities.Account;
 import com.example.geektrust.Entities.Bank;
 import com.example.geektrust.Entities.Customer;
 import com.example.geektrust.Entities.Loan;
-import com.example.geektrust.Entities.Account;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class PassBook implements IPassBook {
-    private final HashMap<Customer, List<Loan>> passBook;
+    private final ILoanAccountManager loanAccountManager;
+    private final IPaymentManager paymentManager;
 
-
-    public PassBook() {
-        this.passBook = new HashMap<>();
+    public PassBook(ILoanAccountManager loanAccountManager, IPaymentManager paymentManager) {
+        this.loanAccountManager = loanAccountManager;
+        this.paymentManager = paymentManager;
     }
-
 
     @Override
     public void updateAccount(Customer customer, Bank bank, Account account) {
-
-        Loan loan = getLoan(bank, customer);
-
-        loan.addAccount(account);
-
+        paymentManager.updateAccount(customer, bank, account);
     }
 
     @Override
     public void saveCustomer(Customer customer, Loan loan) {
-        passBook.computeIfAbsent(customer, k -> new ArrayList<>()).add(loan);
-
-
+        loanAccountManager.saveCustomer(customer, loan);
     }
 
     @Override
     public Loan getLoan(Bank bank, Customer customer) {
-
-        return passBook.get(customer).stream()
-                .filter(loan -> loan.getBank().getBankName().equals(bank.getBankName()))
-                .findFirst().orElseThrow(RuntimeException::new);
+        return loanAccountManager.getLoan(bank, customer);
     }
 
 }

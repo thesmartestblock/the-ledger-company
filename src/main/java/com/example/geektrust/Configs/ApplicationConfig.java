@@ -1,20 +1,18 @@
 package com.example.geektrust.Configs;
 
-import java.util.HashMap;
-import java.util.List;
-
 import com.example.geektrust.Commands.AddPaymentCommand;
 import com.example.geektrust.Commands.CreateLoanCommand;
 import com.example.geektrust.Commands.GetBalanceCommand;
 import com.example.geektrust.Commands.ICommand;
-import com.example.geektrust.Entities.Customer;
-import com.example.geektrust.Entities.Loan;
 import com.example.geektrust.Repository.*;
 import com.example.geektrust.Services.*;
 
 public class ApplicationConfig {
 
-    private final IPassBook book = new PassBook();
+    private final ILoanAccountManager loanAccountManager = new LoanAccountManager();
+    private final IPaymentManager paymentManager = new PaymentManager(loanAccountManager);
+
+    private final IPassBook book = new PassBook(loanAccountManager, paymentManager);
 
     private final ILoanService loanService = new LoanService(book);
     private final IBalanceService balanceService = new BalanceService(book);

@@ -4,27 +4,14 @@ import java.util.List;
 
 
 public class Loan {
-
-    private final Bank bank;
-    private final Customer customer;
     private final Installment installment;
     private final Double totalAmountToPay;
     private final AccountManager accountManager;
 
-    public Loan(Bank bank, Customer customer, Installment installment, Double totalAmountToPay) {
-        this.bank = bank;
-        this.customer = customer;
+    public Loan(Installment installment, Double totalAmountToPay) {
         this.installment = installment;
         this.totalAmountToPay = totalAmountToPay;
         this.accountManager = new AccountManager();
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public Customer getBorrower() {
-        return customer;
     }
 
     public Integer getInstallmentCost() {
