@@ -19,7 +19,7 @@ public class LoanService implements ILoanService{
         Double amountToPay = calculateTotalAmountToPay(data);
 
         Installment installment = calculateFinalInstallment(amountToPay, data.getYears());
-        Loan loan = new Loan(installment,amountToPay);
+        Loan loan = new Loan(bank,installment,amountToPay);
         records.saveCustomer(customer,loan);
     }
     Double calculateTotalAmountToPay(LoanDetails data){
